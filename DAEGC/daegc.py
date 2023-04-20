@@ -61,7 +61,7 @@ def trainer(dataset):
 
     # data and label
     data = torch.Tensor(dataset.x).to(device)
-    y = dataset.y.cpu().numpy()
+    # y = dataset.y.cpu().numpy()
 
     with torch.no_grad():
         _, z = model.gat(data, adj, M)
@@ -70,7 +70,7 @@ def trainer(dataset):
     kmeans = KMeans(n_clusters=args.n_clusters, n_init=20)
     y_pred = kmeans.fit_predict(z.data.cpu().numpy())
     model.cluster_layer.data = torch.tensor(kmeans.cluster_centers_).to(device)
-    eva(y, y_pred, 'pretrain')
+    # eva(dataset.x, y_pred, 'pretrain')
 
     for epoch in range(args.max_epoch):
         model.train()
@@ -79,7 +79,7 @@ def trainer(dataset):
             A_pred, z, Q = model(data, adj, M)
             
             q = Q.detach().data.cpu().numpy().argmax(1)  # Q
-            eva(y, q, epoch)
+            eva(dataset.x, q, epoch)
 
         A_pred, z, q = model(data, adj, M)
         p = target_distribution(Q.detach())
@@ -121,13 +121,15 @@ if __name__ == "__main__":
     elif args.name == 'Cora':
       args.lr = 0.0001
       args.k = None
-      args.n_clusters = 7
+      args.n_clusters = 12
     elif args.name == "Pubmed":
         args.lr = 0.001
         args.k = None
         args.n_clusters = 3
     else:
+        args.lr = 0.0001
         args.k = None
+        args.n_clusters = 12
     
     
     args.pretrain_path = f'./pretrain/predaegc_{args.name}_{args.epoch}.pkl'
