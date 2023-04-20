@@ -32,7 +32,7 @@ def pretrain(dataset):
 
     # data and label
     x = torch.Tensor(dataset.x).to(device)
-    #y = dataset.y.cpu().numpy()
+    # y = dataset.y.cpu().numpy()
 
     for epoch in range(args.max_epoch):
         model.train()
@@ -47,7 +47,8 @@ def pretrain(dataset):
             kmeans = KMeans(n_clusters=args.n_clusters, n_init=20).fit(
                 z.data.cpu().numpy()
             )
-           # acc, nmi, ari, f1 = eva(y, kmeans.labels_, epoch)
+            # acc, nmi, ari, f1 = eva(y, kmeans.labels_, epoch)
+            eva(dataset.x,kmeans.labels_,epoch)
         if epoch % 5 == 0:
             torch.save(
                 model.state_dict(), f"./pretrain/predaegc_{args.name}_{epoch}.pkl"
@@ -88,7 +89,9 @@ if __name__ == "__main__":
         args.k = None
         args.n_clusters = 3
     else:
+        args.lr = 0.001
         args.k = None
+        args.n_clusters = 12
 
     args.input_dim = dataset.num_features
 
