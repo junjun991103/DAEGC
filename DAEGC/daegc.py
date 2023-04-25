@@ -79,8 +79,9 @@ def trainer(dataset):
             A_pred, z, Q = model(data, adj, M)
             
             q = Q.detach().data.cpu().numpy().argmax(1)  # Q
-            eva(dataset.x, q, epoch)
-
+            if(len(np.unique(q)) > 1) :
+              eva(dataset.x, q, epoch)
+              np.save('result',q)
         A_pred, z, q = model(data, adj, M)
         p = target_distribution(Q.detach())
 
