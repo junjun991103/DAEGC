@@ -80,6 +80,7 @@ def trainer(dataset):
             
             q = Q.detach().data.cpu().numpy().argmax(1)  # Q
             if(len(np.unique(q)) > 1) :
+              print('num of clusters:',len(np.unique(q)))
               eva(dataset.x, q, epoch)
               np.save('result',q)
         A_pred, z, q = model(data, adj, M)
@@ -128,9 +129,10 @@ if __name__ == "__main__":
         args.k = None
         args.n_clusters = 3
     else:
+        args.hidden_size = 64
         args.lr = 0.0001
         args.k = None
-        args.n_clusters = 12
+        args.n_clusters = 5
     
     
     args.pretrain_path = f'./pretrain/predaegc_{args.name}_{args.epoch}.pkl'
