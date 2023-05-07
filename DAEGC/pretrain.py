@@ -89,9 +89,10 @@ if __name__ == "__main__":
         args.k = None
         args.n_clusters = 3
     else:
-        args.lr = 0.001
+        args.hidden_size = 64
+        args.lr = 0.0005
         args.k = None
-        args.n_clusters = 12
+        args.n_clusters = 5
 
     args.input_dim = dataset.num_features
 
