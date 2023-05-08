@@ -34,7 +34,7 @@ def pretrain(dataset):
     x = torch.Tensor(dataset.x).to(device)
     # y = dataset.y.cpu().numpy()
 
-    for epoch in range(args.max_epoch):
+    for epoch in range(args.max_epoch+1):
         model.train()
         A_pred, z = model(x, adj, M)
         loss = F.binary_cross_entropy(A_pred.view(-1), adj_label.view(-1))
@@ -48,7 +48,9 @@ def pretrain(dataset):
                 z.data.cpu().numpy()
             )
             # acc, nmi, ari, f1 = eva(y, kmeans.labels_, epoch)
-            eva(dataset.x,kmeans.labels_,epoch)
+            if(len(np.unique(x) > 1):
+                print('num of clusters:',len(np.unique(x))
+                eva(dataset.x,kmeans.labels_,epoch)
         if epoch % 5 == 0:
             torch.save(
                 model.state_dict(), f"./pretrain/predaegc_{args.name}_{epoch}.pkl"
