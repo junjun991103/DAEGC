@@ -48,8 +48,8 @@ def pretrain(dataset):
                 z.data.cpu().numpy()
             )
             # acc, nmi, ari, f1 = eva(y, kmeans.labels_, epoch)
-            if(len(np.unique(x) > 1):
-                print('num of clusters:',len(np.unique(x))
+            if(len(np.unique(x) > 1)):
+                print('num of clusters:',len(np.unique(x)))
                 eva(dataset.x,kmeans.labels_,epoch)
         if epoch % 5 == 0:
             torch.save(
