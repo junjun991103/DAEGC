@@ -129,10 +129,10 @@ if __name__ == "__main__":
         args.k = None
         args.n_clusters = 3
     else:
-        args.hidden_size = 64
-        args.lr = 0.0001
+        args.hidden_size = 128
+        args.lr = 0.005
         args.k = None
-        args.n_clusters = 5
+#         args.n_clusters = 5
     
     
     args.pretrain_path = f'./pretrain/predaegc_{args.name}_{args.epoch}.pkl'
