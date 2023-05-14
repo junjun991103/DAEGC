@@ -44,7 +44,13 @@ def pretrain(dataset):
 
         with torch.no_grad():
             _, z = model(x, adj, M)
-    
+            kmeans = KMeans(n_clusters=args.n_clusters, n_init=20).fit(
+                z.data.cpu().numpy())
+            y = kmeans.labels_
+            if(len(np.unique(y)) > 1) :
+              print('num of clusters:',len(np.unique(y)))
+              # print(type(dataset.x),type(y))
+              eva(dataset.x, y, epoch)    
         if epoch % 5 == 0:
             torch.save(
                 model.state_dict(), f"./pretrain/predaegc_{args.name}_{epoch}.pkl"
